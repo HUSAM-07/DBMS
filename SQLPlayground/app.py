@@ -23,7 +23,7 @@ countrylanguage = ['CountryCode,', 'Language,', 'IsOfficial,', 'Percentage']
 
 
 def main():
-	st.title("HUSAM's Country Directory")
+	st.title("Country Directory")
 	st.subheader("Name: Mohammed Husamuddin | 2021A7PS0150U")
 
 	menu = ["Home","About"]
