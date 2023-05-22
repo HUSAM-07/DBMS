@@ -10,9 +10,22 @@ c = conn.cursor()
 
 # Fxn Make Execution
 def sql_executor(raw_code):
-	c.execute(raw_code)
-	data = c.fetchall()
-	return data 
+    if 'CALL' in raw_code:
+        procedure_name = raw_code.split()[1]
+        parameters = raw_code.split('(')[1].split(')')[0].split(',')
+        parameter_values = []
+        for parameter in parameters:
+            parameter_value = parameter.strip().strip("'")
+            parameter_values.append(parameter_value)
+        placeholders = ', '.join(['?' for _ in range(len(parameter_values))])
+        query = f"CALL {procedure_name}({placeholders})"
+        c.execute(query, parameter_values)
+        data = c.fetchall()
+    else:
+        c.execute(raw_code)
+        data = c.fetchall()
+    return data
+
 
 
 city = ['ID,', 'Name,', 'CountryCode,', 'District,', 'Population']
